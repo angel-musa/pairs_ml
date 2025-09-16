@@ -28,5 +28,9 @@ A compact, interview-ready project that implements an **ML-driven pairs trading 
 - **Metrics & Plots**:
   - CAGR, Sharpe, Sortino, max drawdown, hit rate, avg win/loss, turnover.
   - Equity curve, drawdown curve, residual diagnostics, feature importances (if XGB).
+ 
+## Next Steps: 
+- currently working with finding optimal input parameters for max returns
+
 
 
