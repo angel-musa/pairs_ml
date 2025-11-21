@@ -61,15 +61,20 @@ function App() {
 
     return (
         <div className="min-h-screen bg-background text-white p-6 font-sans">
-            <header className="mb-8 flex justify-between items-center border-b border-white/10 pb-4">
-                <div>
-                    <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-400">
-                        Stat Arb Research Engine
-                    </h1>
-                    <p className="text-gray-400 mt-1">Pairs trading & mean-reversion analytics</p>
-                </div>
-                <div className="text-sm text-gray-500">
-                    Dataset: prices.csv
+            <header className="mb-8 border-b border-white/10 pb-4">
+                <div className="flex justify-between items-start">
+                    <div>
+                        <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-400">
+                            Stat Arb Research Engine
+                        </h1>
+                        <p className="text-gray-400 mt-1">Pairs trading & mean-reversion analytics</p>
+                    </div>
+                    <div className="text-sm text-gray-500 text-right">
+                        <div className="font-semibold text-gray-400">Data Source</div>
+                        <div className="mt-1">
+                            Current: <span className="text-primary">data/prices.csv</span>
+                        </div>
+                    </div>
                 </div>
             </header>
 

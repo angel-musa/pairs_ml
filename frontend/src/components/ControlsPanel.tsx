@@ -1,4 +1,5 @@
 import { Play } from 'lucide-react';
+import { Tooltip } from './Tooltip';
 
 interface ControlsPanelProps {
     tickers: string[];
@@ -29,7 +30,10 @@ export const ControlsPanel: React.FC<ControlsPanelProps> = ({
 
             <div className="space-y-4">
                 <div>
-                    <label className="block text-sm text-gray-400 mb-1">Ticker Y (Dependent)</label>
+                    <label className="block text-sm text-gray-400 mb-1">
+                        Ticker Y (Dependent)
+                        <Tooltip content="The dependent variable in the regression. This is the asset whose price we're trying to predict/explain using Ticker X. In mean-reversion trading, we look for deviations from the relationship Y = a + b*X." />
+                    </label>
                     <select
                         className="w-full bg-background border border-white/10 rounded p-2 text-white focus:border-primary outline-none"
                         value={selectedTickers[1]}
@@ -40,7 +44,10 @@ export const ControlsPanel: React.FC<ControlsPanelProps> = ({
                 </div>
 
                 <div>
-                    <label className="block text-sm text-gray-400 mb-1">Ticker X (Independent)</label>
+                    <label className="block text-sm text-gray-400 mb-1">
+                        Ticker X (Independent)
+                        <Tooltip content="The independent variable in the regression. This is the asset used to predict/explain Ticker Y's price movements. We regress Y on X to find their cointegration relationship." />
+                    </label>
                     <select
                         className="w-full bg-background border border-white/10 rounded p-2 text-white focus:border-primary outline-none"
                         value={selectedTickers[0]}
@@ -51,7 +58,10 @@ export const ControlsPanel: React.FC<ControlsPanelProps> = ({
                 </div>
 
                 <div className="pt-4 border-t border-white/10">
-                    <label className="block text-sm text-gray-400 mb-1">Rolling Window</label>
+                    <label className="block text-sm text-gray-400 mb-1">
+                        Rolling Window
+                        <Tooltip content="Number of days used to calculate the rolling mean and standard deviation for the z-score. A larger window (e.g., 60-120) captures longer-term mean-reversion; a smaller window (e.g., 20-40) is more responsive to recent changes." />
+                    </label>
                     <input
                         type="number"
                         className="w-full bg-background border border-white/10 rounded p-2 text-white focus:border-primary outline-none"
@@ -61,7 +71,10 @@ export const ControlsPanel: React.FC<ControlsPanelProps> = ({
                 </div>
 
                 <div>
-                    <label className="block text-sm text-gray-400 mb-1">Entry Z-Score</label>
+                    <label className="block text-sm text-gray-400 mb-1">
+                        Entry Z-Score
+                        <Tooltip content="The z-score threshold to enter a position. When the spread z-score exceeds +Entry (overbought), we short the spread. When it falls below -Entry (oversold), we long the spread. Typical values: 1.5-3.0." />
+                    </label>
                     <input
                         type="number"
                         step="0.1"
@@ -72,7 +85,10 @@ export const ControlsPanel: React.FC<ControlsPanelProps> = ({
                 </div>
 
                 <div>
-                    <label className="block text-sm text-gray-400 mb-1">Exit Z-Score</label>
+                    <label className="block text-sm text-gray-400 mb-1">
+                        Exit Z-Score
+                        <Tooltip content="The z-score threshold to exit a position. When the spread returns to within ±Exit of the mean, we close the trade and take profit. Typical values: 0.25-1.0. Lower values mean tighter profit-taking." />
+                    </label>
                     <input
                         type="number"
                         step="0.1"
