@@ -199,7 +199,7 @@ def run_backtest(req: BacktestRequest):
         # 2. Cointegration
         logger.info("Running cointegration test")
         eg_res = engle_granger(y, x)
-        logger.info(f"Hedge ratio: {eg_res.hedge_ratio:.4f}, ADF p-value: {eg_res.p_value:.4f}")
+        logger.info(f"Hedge ratio: {eg_res.hedge_ratio:.4f}, ADF p-value: {eg_res.adf_pvalue:.4f}")
         
         # 3. Signals
         logger.info("Generating signals")
