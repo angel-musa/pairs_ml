@@ -68,3 +68,44 @@ pairs_ml/
     ```
 
 3.  Explore the notebooks in `notebooks/` for detailed analysis.
+
+## Web App
+
+This repo includes a full-stack web application to interact with the engine.
+
+### Backend
+1.  Navigate to `backend/`:
+    ```bash
+    cd backend
+    ```
+2.  Install dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
+3.  Run the server:
+    ```bash
+    uvicorn main:app --reload
+    ```
+    The API will be available at `http://localhost:8000`.
+
+### Frontend
+1.  Navigate to `frontend/`:
+    ```bash
+    cd frontend
+    ```
+2.  Install dependencies:
+    ```bash
+    npm install
+    ```
+3.  Run the development server:
+    ```bash
+    npm run dev
+    ```
+    Open `http://localhost:5173` in your browser.
+
+### Usage
+1.  Ensure both backend and frontend are running.
+2.  Open the frontend URL.
+3.  Select tickers (e.g., AAA, BBB) from the dropdowns.
+4.  Adjust parameters (Window, Entry Z, Exit Z).
+5.  Click "Run Backtest" to visualize results.
