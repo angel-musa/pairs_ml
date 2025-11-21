@@ -6,28 +6,62 @@ import { MetricsCard } from './components/MetricsCard';
 import { ChartPrices } from './components/ChartPrices';
 import { ChartSpreadZ } from './components/ChartSpreadZ';
 import { ChartPnL } from './components/ChartPnL';
+import { Loader2 } from 'lucide-react';
+
+// LocalStorage keys
+const STORAGE_KEYS = {
+    TICKERS: 'statarb_selected_tickers',
+    PARAMS: 'statarb_params'
+};
+
+// Default parameters
+const DEFAULT_PARAMS = {
+    window: 60,
+    entry_z: 2.0,
+    exit_z: 0.5
+};
 
 function App() {
     const [tickers, setTickers] = useState<string[]>([]);
-    const [selectedTickers, setSelectedTickers] = useState<[string, string]>(['', '']);
-    const [params, setParams] = useState({
-        window: 60,
-        entry_z: 2.0,
-        exit_z: 0.5
+    const [selectedTickers, setSelectedTickers] = useState<[string, string]>(() => {
+        // Load from localStorage or use defaults
+        const saved = localStorage.getItem(STORAGE_KEYS.TICKERS);
+        return saved ? JSON.parse(saved) : ['', ''];
     });
+
+    const [params, setParams] = useState(() => {
+        // Load from localStorage or use defaults
+        const saved = localStorage.getItem(STORAGE_KEYS.PARAMS);
+        return saved ? JSON.parse(saved) : DEFAULT_PARAMS;
+    });
+
     const [loading, setLoading] = useState(false);
     const [results, setResults] = useState<BacktestResponse | null>(null);
     const [error, setError] = useState<string | null>(null);
 
+    // Persist selectedTickers to localStorage
+    useEffect(() => {
+        if (selectedTickers[0] && selectedTickers[1]) {
+            localStorage.setItem(STORAGE_KEYS.TICKERS, JSON.stringify(selectedTickers));
+        }
+    }, [selectedTickers]);
+
+    // Persist params to localStorage
+    useEffect(() => {
+        localStorage.setItem(STORAGE_KEYS.PARAMS, JSON.stringify(params));
+    }, [params]);
+
+    // Load available tickers on mount
     useEffect(() => {
         api.getPairs().then(t => {
             setTickers(t);
-            if (t.length >= 2) {
+            // If no saved tickers, use first two available
+            if (!selectedTickers[0] && !selectedTickers[1] && t.length >= 2) {
                 setSelectedTickers([t[0], t[1]]);
             }
         }).catch(err => {
             console.error("Failed to fetch pairs", err);
-            setError("Failed to load tickers. Is backend running?");
+            setError("Failed to load tickers. Is the backend running at http://localhost:8000?");
         });
     }, []);
 
@@ -42,7 +76,9 @@ function App() {
             setResults(res);
         } catch (err: any) {
             console.error(err);
-            setError(err.response?.data?.detail || "Backtest failed");
+            const errorMsg = err.response?.data?.detail || err.message || "Backtest failed";
+            setError(errorMsg);
+            // Don't clear previous results on error - keep them visible
         } finally {
             setLoading(false);
         }
@@ -97,6 +133,7 @@ function App() {
 
                     {error && (
                         <div className="mt-4 p-4 bg-red-500/10 border border-red-500/20 text-red-400 rounded-lg text-sm">
+                            <div className="font-semibold mb-1">Error</div>
                             {error}
                         </div>
                     )}
@@ -104,7 +141,15 @@ function App() {
 
                 {/* Right Panel: Results */}
                 <div className="lg:col-span-3">
-                    {results ? (
+                    {loading ? (
+                        <div className="h-96 flex flex-col items-center justify-center border border-white/5 rounded-xl bg-surface/50">
+                            <Loader2 className="w-12 h-12 text-primary animate-spin mb-4" />
+                            <p className="text-gray-400 text-lg font-medium">Running backtest...</p>
+                            <p className="text-gray-500 text-sm mt-2">
+                                Testing cointegration and generating signals
+                            </p>
+                        </div>
+                    ) : results ? (
                         <>
                             <MetricsCard metrics={results.metrics} />
 
@@ -123,8 +168,13 @@ function App() {
                             </div>
                         </>
                     ) : (
-                        <div className="h-96 flex items-center justify-center border border-white/5 rounded-xl bg-surface/50 text-gray-500">
-                            Select parameters and run backtest to see results
+                        <div className="h-96 flex flex-col items-center justify-center border border-white/5 rounded-xl bg-surface/50 text-gray-500">
+                            <div className="text-center">
+                                <p className="text-lg font-medium mb-2">No Results Yet</p>
+                                <p className="text-sm">
+                                    Select tickers and parameters on the left, then click "Run Backtest"
+                                </p>
+                            </div>
                         </div>
                     )}
                 </div>

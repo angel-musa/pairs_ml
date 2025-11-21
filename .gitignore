@@ -1,16 +1,91 @@
 # Python
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
 .venv/
 venv/
+ENV/
+env/
 .env
-.ipynb_checkpoints/
+.env.local
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb_checkpoints/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
 # OS
 .DS_Store
 Thumbs.db
-# Data/plots
-data/*
-!data/.gitkeep
-*.png
+
+# Data files (except sample data)
+data/*.csv
+!data/prices.csv
+*.parquet
+*.h5
+*.hdf5
+
+# Logs
+*.log
+logs/
+
+# Test coverage
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.next/
+frontend/out/
+frontend/build/
+frontend/.cache/
+
+# Documentation images (keep placeholders, ignore actual screenshots initially)
+# Uncomment the following to track screenshots:
+# !docs/img/dashboard.png
+# !docs/img/notebook_backtest.png
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+.cache/
+
+# Model artifacts
+models/
+*.pkl
+*.joblib
+
+# Jupyter Notebook output
+*.html
+# But keep any explicitly committed HTML docs
+!docs/**/*.html
