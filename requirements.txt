@@ -1,8 +1,6 @@
-numpy==1.26.4
-scipy==1.11.4
-pandas==2.2.2
-statsmodels==0.14.2
-scikit-learn==1.5.1
-matplotlib==3.9.0
-xgboost==2.1.1
-yfinance==0.2.54
+numpy
+pandas
+scipy
+statsmodels
+matplotlib
+jupyter
